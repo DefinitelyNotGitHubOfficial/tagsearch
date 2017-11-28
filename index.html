@@ -1,0 +1,339 @@
+<!doctype html>
+<html>
+<head>
+<style>
+.button,.buttoff {
+	padding:5px 10px;
+	background-color:rgba(48,237,33,1.00);
+	border:1px solid rgba(0,148,40,1.00);
+	display: inline-block;
+	margin:10px;
+	}
+.button:hover, .buttoff:hover {
+	background-color:rgba(219,122,48,1.00);
+	cursor: pointer;
+	}
+</style>
+<meta charset="utf-8">
+<script src="data.js"></script>
+<script src="jquery.min.js"></script>
+<title>Untitled Document</title>
+</head>
+
+<body>
+<b>Add these tags</b>
+<div id="addtags">
+<div class="button" name="Science Fiction">Science Fiction</div>
+<div class="button" name="Fantasy">Fantasy</div>
+<div class="button" name="Creature">Creature</div>
+<div class="button" name="Homunk">Homunk</div>
+<div class="button" name="Flingmatoli">Flingmatoli</div>
+</div>
+<b>Remove these tags</b>
+<div id="removetags"></div>
+<div class="buttoff" name="Flingmatoli">Flingmatoli</div>-
+<b>Movies List</b><br />
+
+<div id="movie-list"></div>
+
+<script>
+var selectedTags = [], matchedTags = [], notMatched = [], moveSelected = [];
+$('.button').click(function(buttonTag){
+	buttonTag = $(this).attr('Name');
+	selectedTags.push(buttonTag);
+	searchSelected();
+	$(this).fadeOut('fast');
+	moveTagToSelected();
+	});
+	
+$('.buttoff').click(function(){
+	console.log('clicked')
+	});
+
+
+
+function moveTagToSelected(){
+	selectedTags.forEach(function(element) {
+    	moveSelected.push("<div class='buttoff' name='"+element+"'>"+element+"</div>")
+		});
+	document.getElementById("removetags").innerHTML = Array.from(new Set(moveSelected)).join("");
+	};
+
+function removeSelectedTags(){
+
+	};
+
+function searchSelected(){
+	// loop for every tag selected
+	var selectedTagCounter = 0;
+	while(selectedTagCounter < selectedTags.length){
+		// loop for every film
+		var filmCounter = 0;
+		while(filmCounter < jsonData.Films.length){
+			// loop for every tag in every film
+			var tagCounter = 0;
+			var noMatch = 0;
+			while(tagCounter < jsonData.Films[filmCounter].Tags.length){
+				// compare Tags now
+				if(selectedTags[selectedTagCounter] == jsonData.Films[filmCounter].Tags[tagCounter]){
+					//console.log("TRIGGERED on " + jsonData.Films[filmCounter].Tags[tagCounter])
+					matchedTags.push(jsonData.Films[filmCounter].Name)
+					}
+				else{
+					noMatch++;
+					//console.log("no matches on " + noMatch)
+					if(noMatch == jsonData.Films[filmCounter].Tags.length){
+						//console.log("NNNNNNo! no match at all... ZERO")
+						notMatched.push(jsonData.Films[filmCounter].Name)
+						}
+					}
+				tagCounter++;
+				}
+			filmCounter++;
+			}
+		selectedTagCounter++;
+		}
+	//clean up arrays so there are no duplicates
+	var cleanedMatches = Array.from(new Set(matchedTags));
+	var cleanedMismatches = Array.from(new Set(notMatched));
+	console.log("MOVIES THAT MATCH THIS TAG ARE: " + cleanedMatches.length);
+	console.log("MOVIES THAT DO NO MATCH ARE: " + cleanedMismatches.length);
+	//loop mismatches
+	var mismatchCounter = 0;
+	//everytime there is a mismatch, compare it to every match, if they match, then remove it from cleanlist
+	while(mismatchCounter < cleanedMismatches.length){
+		console.log("the mismatch are: " + cleanedMismatches)
+		var cleanMatchCounter = 0;
+		while(cleanMatchCounter < cleanedMatches.length){
+			console.log("checked "+cleanedMismatches[mismatchCounter]+" against " + cleanedMatches[cleanMatchCounter])
+			if(cleanedMismatches[mismatchCounter] == cleanedMatches[cleanMatchCounter]){console.log("They MATCHED");cleanedMatches.splice(cleanMatchCounter,cleanMatchCounter+1)}
+			else{console.log("They didnt match")}
+			cleanMatchCounter++;
+			}
+		mismatchCounter++;
+		}
+	//print results
+	if(cleanedMatches.length == 0){
+		console.log("There are no matches to your tag combination, try removing some tags")
+		}
+	else{console.log("The matches are: " + cleanedMatches)}
+	}
+	
+	
+
+
+
+
+
+
+
+
+
+
+
+/*
+var selectedTags = [];
+var matchedTags = [];
+$('.button').click(function(){
+	var buttonTag = $(this).attr('Name');
+	selectedTags.push(buttonTag);
+	console.log("Selected Tags are: " + selectedTags)
+	filmLoop();
+	});
+
+var filmLoop = function(){
+	var filmCount = 0;
+	while(filmCount < jsonData.Films.length){
+		console.log("Movie " + filmCount + " " + jsonData.Films[filmCount].Name + " !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+		tagLoop();
+		filmCount++;
+		}
+	};
+var tagLoop = function(){
+	var tagCount = 0;
+	var tagCompare = function(){
+		var tagCompareCount = 0;
+		//console.log('Tag Compare pulls tag ' + jsonData.Films[window.filmCount].Tags[tagCount] + " and compares it against " + )
+		while(tagCompareCount < selectedTags.length){
+			console.log("Selected tag #" + tagCompareCount + " Which is " + selectedTags[tagCompareCount])
+			if(selectedTags[tagCompareCount] == jsonData.Films[window.filmCount].Tags[tagCount]){
+				//matchedTags.push(jsonData.Films[window.filmCount].Tags[tagCount].Name);
+				console.log("MAAAAAAAAAAAAAAAAAAATCHED "  + jsonData.Films[window.filmCount].Tags[tagCount].Name)
+				}
+			tagCompareCount++;
+			}
+		};
+		
+	while(tagCount < jsonData.Films[window.filmCount].Tags.length){
+		console.log("Tag " + tagCount + " " + jsonData.Films[window.filmCount].Tags[tagCount])
+		tagCompare();
+		tagCount++;
+		}
+	
+	};
+var filmCount = 0;
+*/
+/*
+	var countMatches = 0;
+	var countNoMatch = 0;
+	var matched = [];
+	//console.clear()
+	var tagInfo = $(this).attr('Name');
+	//console.log(tagInfo)
+	
+	selectedTags.push(tagInfo);
+	console.log(selectedTags + " Has been selected");
+	var failure = false;
+	selectedTagsCounter = 0;
+	while(selectedTagsCounter <= selectedTags.length-1){
+		console.log("We\'re on Tag " + (selectedTagsCounter+1) + " out of " + selectedTags.length + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+		var objectCounter = 1;
+		while(objectCounter <= jsonData.Films.length){
+			console.log("we\'re on film " + objectCounter + " out of "+ jsonData.Films.length + " which is " + jsonData.Films[objectCounter-1].Name)
+			var tagCounter = 1;
+			
+			while(tagCounter <= jsonData.Films[objectCounter-1].Tags.length){
+				console.log("We\'re on tag " + tagCounter + " out of " + jsonData.Films[objectCounter-1].Tags.length + " tags which is " + jsonData.Films[objectCounter-1].Tags[tagCounter-1])	
+				if(selectedTags[selectedTagsCounter] == jsonData.Films[objectCounter-1].Tags[tagCounter-1]){
+					console.log("Matched " + selectedTags[selectedTagsCounter] + " with " + jsonData.Films[objectCounter-1].Tags[tagCounter-1])
+					matched.push(jsonData.Films[objectCounter-1].Name)
+					countMatches++;
+					}
+				else{
+					countNoMatch++;
+					if(countNoMatch >= jsonData.Films[objectCounter-1].Tags.length){failure = true;}
+					}
+				console.log(failure)
+				console.log("Matches = " + countMatches + " and mismatched is = " + countNoMatch)
+				tagCounter++;
+				}
+				console.log(selectedTags.length + " " +countMatches)
+			
+			console.log(matched)	
+			objectCounter++;
+			
+			}
+		selectedTagsCounter++;
+		}
+	})
+/*
+
+var selectedTags = [];
+var matched = 0;
+$('.button').click(function(){
+	//finds what you're clicking on
+	var tagInfo = $(this).attr('Name');
+	var badCounter = 0;
+	var letscountitall = 0;
+	console.clear()
+	selectedTags.push(tagInfo);
+	//console.log(selectedTags)
+	howManyTags = selectedTags.length;
+	
+	var objectCounterPosition = 0;
+	
+	console.log(selectedTags.length + " Tags Selected and there are " + jsonData.Films.length + " objects" )
+	
+	while(objectCounterPosition < jsonData.Films.length){
+		
+		var subObjectCounter = 0;
+		
+		console.log("On object " + objectCounterPosition + " Which is " + jsonData.Films[objectCounterPosition].Name);
+		
+		while(subObjectCounter < jsonData.Films[objectCounterPosition].Tags.length){
+			//console.log(jsonData.Films[objectCounterPosition].Tags[subObjectCounter])
+		
+			console.log("On tag " + jsonData.Films[objectCounterPosition].Tags[subObjectCounter]);
+		
+			
+			var kelp = 0;
+			while(kelp <= howManyTags){
+				if(jsonData.Films[objectCounterPosition].Tags[subObjectCounter] == selectedTags[kelp] ){
+					matched++;
+					console.log(tagInfo + " MATCHED " + jsonData.Films[objectCounterPosition].Tags[subObjectCounter] + " HAAAAAAZAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA!");
+					letscountitall++;
+					}
+				else {
+					console.log(tagInfo + " Did not Match " + jsonData.Films[objectCounterPosition].Tags[subObjectCounter]);
+					letscountitall++;
+					badCounter++;
+					}
+				kelp++;
+				}
+			
+				
+				
+			
+	//		var tagCounter = 0;
+	//		while(tagCounter < selectedTags.length){
+	//			//console.log(selectedTags[tagCounter])
+	//			
+	//			if(selectedTags[tagCounter] == jsonData.Films[objectCounterPosition].Tags[subObjectCounter]){
+	//				console.log('TRIGGERRRRRRREDDD DUUUUUUUUUUUUUUUUUUUUUUUUUUUUUDE')
+	//				}
+		//		
+			//	tagCounter++;
+			//	}
+			
+				
+			
+			subObjectCounter++;
+			}
+			var decca = selectedTags.length * 10;
+if(badCounter >= letscountitall){console.log("NOT A PERFECT MATCH Bad Counter = " + badCounter + " All of them = " + letscountitall + " how many Tags " + decca + " matches " + matched)}
+	else {console.log("bad counter = " + badCounter + " All of them = " + letscountitall + " how many Tags " + selectedTags.length + " How many selected buttons  " + decca + " matches " + matched)}
+		
+		objectCounterPosition++;
+		}
+	
+	
+	});*/
+
+/*var seventies = function(){
+	
+	if(jsonData.Films[0].Era = "70s"){
+		document.getElementById("movie-list").innerHTML = jsonData.Films[0].Name;
+		}
+	else {
+		document.getElementById("movie-list").innerHTML = "No Matches";
+		}
+	};
+
+*/
+/*
+
+var totalRemove = [];
+$('.button').click(function(){
+	var tag = $(this).attr('name');
+	$(this).remove();
+	totalRemove.push('<div class=\"buttoff\" name=\"' + tag +'\">' + tag + '</div>');
+	console.log(totalRemove);
+	document.getElementById("removetags").innerHTML = totalRemove.join("");
+	
+	console.log(tag);
+	var tagSearch = 0;
+	var nully = 0;
+	while(tagSearch <= jsonData.Films[0].Tags.length){
+		if(tag == jsonData.Films[0].Tags[tagSearch]){
+			document.getElementById("movie-list").innerHTML =  jsonData.Films[0].Name;
+			}
+		else{
+			nully++;
+			console.log(nully)
+			if(nully == (jsonData.Films[0].Tags.length+1)){
+				document.getElementById("movie-list").innerHTML = "No Matches"
+					}
+			}
+		tagSearch++;
+		}
+	})
+
+	
+	
+var sort = function(){
+	console.log(this)
+	}
+	*/
+</script>
+</body>
+</html>
