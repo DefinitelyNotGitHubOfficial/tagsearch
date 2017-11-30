@@ -1,0 +1,102 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Whatever</title>
+		<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+		<style>
+		*{margin:0px; padding:0px;}
+		body{	
+			background-color:rgba(40,40,40,1.00);
+			font-family: 'Open Sans', sans-serif;
+			font-size:16px;
+			*background-image:url(slime.jpg);
+			}
+		#wrapper {
+			width:1000px;
+			margin:auto;
+			background-color:#fff;
+			padding:15px;
+			border-radius: 5px;
+			}
+		.tag {
+			background-color:rgba(53,205,236,1.00);
+			padding:5px 10px;
+			display:inline-block;
+			border-radius: 5px;
+			color:rgba(255,255,255,1.00);
+			text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+			transition: all 1s;
+			margin:5px;
+			}
+		.tag:hover{
+			background-color:rgba(255,0,134,1.00);
+			transition: all 0.5s;
+			cursor: pointer;
+			}
+		@keyframes crossout {
+    		0% {width: 0%;}
+    		100% {width:100%;}
+			}
+		@keyframes grow {
+    		0% {color:rgba(255,255,255,1.00)}
+    		100% {color:rgba(255,0,4,1.00)}
+			}
+		.chosen{display:inline-block}
+		.chosen:hover:before {
+			border-bottom: 2px solid #000; 
+			width:100%; 
+			height:10px; 
+			position:relative;
+			z-index: 100; 
+			display:block;
+			top:13px;
+			margin-top:-20px;
+			content:" "; 
+			animation-name: crossout;
+    		animation-duration: 0.7s;
+			}
+		/*.chosen:hover:after {
+			content:"x";
+			color:red;
+			position: absolute;
+			margin-top:-5px;
+			margin-left: -2px;
+			font-size:10px;
+			animation-name: grow;
+			animation-duration: 0.7s;
+			}*/
+		.chosen:hover {
+			cursor: pointer;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="wrapper">
+		<h1>Choose your tags</h1>
+			<div class="tag">1980's</div>
+			<div class="tag">1990's</div>
+			<div class="tag">Comedy</div>
+			<div class="tag">Lovecraftian</div>
+			<div class="tag">Mutants</div>
+			<div class="tag">Demons</div>
+			<div class="tag">Zombies</div>
+			<div class="tag">Parasites</div>
+			<div class="tag">Cannibalism</div>
+			<div class="tag">Torture</div>
+			<div class="tag">Ghosts</div>
+			<div class="tag">Haunted House</div>
+			<div class="tag">Slasher</div>
+			<div class="tag">Aliens</div>
+			<div class="tag">Holidays</div>
+			<div class="tag">Supernatural</div>
+			<div class="tag">Period</div>
+			<div class="tag">Crime</div>
+			<div class="tag">Science Fiction</div>
+			<div class="tag">Vampires</div>
+			<div class="tag">Psychological</div>
+			<br /><br />
+			<div class="chosen">Scary</div> <div class="chosen">Monster</div> Movies
+		</div><!-- wrapper -->
+	</body>
+</html>

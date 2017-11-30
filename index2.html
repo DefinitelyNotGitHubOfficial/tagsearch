@@ -88,7 +88,7 @@ function moveTagToSelected(){
 		});
 	document.getElementById("removetags").innerHTML = Array.from(new Set(moveSelected)).join("");
 	//off button for scope
-	$('.buttoff').click(function(){
+	$('#removetags').on('click','.buttoff',function(){
 		//begin loop to compare slected tags
 		var buttoffTag = $(this).attr('Name');
 		var countoffRemoval = 0;

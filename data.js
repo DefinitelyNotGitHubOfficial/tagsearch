@@ -1,6 +1,28 @@
 // JavaScript Document
 var jsonData = 
     {
+		"Tags":[
+			"1970\‘s",
+			"1980\‘s",
+			"1990\‘s",
+			"2000\‘s",
+			"2010\‘s",
+			"Fantasy",
+			"Science Fiction",
+			"Comedy",
+			"Psychological",
+			"Puppets",
+			"Possession",
+			"Demons",
+			"Folklore",
+			"Holidays",
+			"Haunted Houses",
+			"Ghosts",
+			"Zombies",
+			"Vampires",
+			"Creature",
+			"Werewolves",
+		],
         "Films": [
             {
                 "Name": "Alien",
